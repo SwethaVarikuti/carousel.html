@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="home.css">
+
+</head>
+
+<body>
+    <!--container for carousel-->
+<div class="carousel" >
+    <!--container for images-->
+    <img id="myImg" src="image1.jpg" style="width:40%"/>
+    <br/>
+    <br/>
+    <!--container for radiobuttons-->
+    <div class="imgsel">
+       <div><input type="radio" name="imsel" value="0" onclick="imageselect(value)"/></div>
+       <div><input type="radio" name="imsel" value="1" onclick="imageselect(value)"/></div>  <!--click on the radio button calls imageselect() function which is defined in script-->
+       <div><input type="radio" name="imsel" value="2" onclick="imageselect(value)"/></div>
+       <div><input type="radio" name="imsel" value="3" onclick="imageselect(value)"/></div>
+       <div><input type="radio" name="imsel" value="4" onclick="imageselect(value)"/></div>
+    </div>
+</div>
+<!--Javascript code starts-->
+<script type="text/javascript">
+//Creating array to store images source
+var pic=new Array;
+//Assigning an image source to each array element
+pic[0]="image1.jpg";
+pic[1]="image2.jpg";
+pic[2]="image3.jpg";
+pic[3]="image4.jpg";
+pic[4]="image5.jpg";
+
+let count=0; //Initialize count
+let handleinterval=setInterval(autogallery,1700);   //Calls autogallery function for every 1.7 seconds
+
+function autogallery()   //defining autogallery function
+{
+    //clearInterval(handleintervalfromnum);
+    if(count<pic.length)
+    {
+        let ximg=document.getElementById("myImg");  //gets HTML DOM element with id myImg, in this case it is <img> element.
+        let xradio=document.getElementsByName("imsel")[count];  //gets nth radio element by name imsel (n value is count's value)
+        xradio.value=count;       //This helps to index nth image to nth radio button
+        xradio.checked="True";    //This makes image's corresponding radio button to check
+        ximg.src=pic[count++];
+    }
+else count=0; //This sets value of count to 0 once count is referring to last element of array pic
+}
+
+function imageselect(num)   //defining imageselect function which is called upon clicking on any of the carousel radio buttons
+{
+
+    clearInterval(handleinterval);     //clears interval or stops execution of autogallery function
+    //if(count<pic.length)
+    count=num;
+    //else
+    //count=0;
+    let handleintervalfromnum=setInterval(autogallery,1700);   //Calls autogallery function for every 1.7 seconds
+}
+</script>
+
+
+</body>
+</html>
