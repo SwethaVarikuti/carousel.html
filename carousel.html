@@ -4,7 +4,7 @@
 <title>Home</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="home.css">
+<link rel="stylesheet" type="text/css" href="carousel.css">
 
 </head>
 
@@ -49,18 +49,32 @@ function autogallery()   //defining autogallery function
         xradio.checked="True";    //This makes image's corresponding radio button to check
         ximg.src=pic[count++];
     }
-else count=0; //This sets value of count to 0 once count is referring to last element of array pic
+    else
+    {
+        count=0; //This sets value of count to 0 once count is referring to last element of array pic
+        //This below code in else is added to resolve issue1
+        //Issue-1: More delay when moving from last image to first image
+        ximg=document.getElementById("myImg");
+        let xradio=document.getElementsByName("imsel")[count];
+        xradio.checked="True";
+        ximg.src=pic[count];
+        count++;
+    }
 }
 
 function imageselect(num)   //defining imageselect function which is called upon clicking on any of the carousel radio buttons
 {
-
+    count=num;
+    let handleinterval=setInterval(autogallery,1700);
     clearInterval(handleinterval);     //clears interval or stops execution of autogallery function
     //if(count<pic.length)
-    count=num;
+    //count=num;
     //else
     //count=0;
-    let handleintervalfromnum=setInterval(autogallery,1700);   //Calls autogallery function for every 1.7 seconds
+    //let handleintervalfromnum=setInterval(autogallery,1700);   //Calls autogallery function for every 1.7 seconds
+    //commented above code handleintervalfromnum. This is fix for Issue-2
+    //Issue-2: After click on radio button, images were moving faster which may be because we didn't clear handleintervalfromnum
+    //So, decided to use only handleinterval everywhere and clear it when necessary.
 }
 </script>
 
